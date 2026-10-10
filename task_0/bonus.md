@@ -154,7 +154,7 @@ df.to_csv("ManipalRains_clean.csv", index=False)
 print("Saved!")
 ```
 
-Explanation: to_csv saves the table as a new CSV file. index=False stops pandas from adding an extra column of row numbers.
+Explanation: to_csvcd  saves the table as a new CSV file. index=False stops pandas from adding an extra column of row numbers.
 
 Problem: The cleaned data only exists in Python's memory and is lost when the program ends.
 
