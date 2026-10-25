@@ -21,7 +21,7 @@ The purpose of a split is to create child regions in which predictions are more 
 
 ## 2. Classification leaves and split criteria
 
-For classification, a leaf predicts the most common class among the training observations that reach it. Let \(\hat p_c\) be the proportion of observations in a region that belong to class (c).
+For classification, a leaf predicts the most common class among the training observations that reach it. Let $$hat p_c$$be the proportion of observations in a region that belong to class (c).
 
 ### Misclassification loss
 
@@ -51,9 +51,61 @@ $$
 
 Entropy is zero when a region contains only one class. It is larger when the class proportions are more evenly mixed. The information-theoretic interpretation is that a mixed region requires more information to identify an observation’s class.
 
-The lecture uses base 2 to express information in bits. Using another logarithm base only multiplies entropy by a positive constant, so it does not change which split is best.
+We have used base 2 to express information in bits. Using another logarithm base only multiplies entropy by a positive constant, so it does not change which split is best.
 
 Because the parent class proportions are the weighted average of the children’s proportions, the parent entropy can be compared with the weighted average child entropy. The reduction is the **information gain** of the split.
+
+A split takes one parent region (R_p) and divides it into child regions (R_1) and (R_2). Each region has its own class proportions and therefore its own impurity (loss).
+
+The parent’s class proportions are the **weighted average** of the children’s proportions. The children’s combined loss is also a weighted average:
+
+$$
+L_{\text{children}} = w_1 L(R_1) + w_2 L(R_2),
+\qquad w_1 + w_2 = 1,
+$$
+
+where (w_i) is the fraction of the parent’s observations that went to child (i). If the children are the same size, each weight is (1/2), so this is just the midpoint between their losses.
+
+For classification, entropy is
+
+$$
+H(p) = -\sum_c p_c \log(p_c),
+$$
+
+where (p_c) is the proportion of class (c) in the region. For two classes, we can plot entropy against the proportion of one class. The curve is strictly concave: it is low for nearly pure regions and high for a more even class mixture.
+
+Suppose a split produces children with different class proportions. On the plot, their proportions sit at different positions on the curve. The parent proportion is the weighted average of those positions. Because the curve is strictly concave, the parent’s entropy is greater than the weighted average of the children’s entropies, provided the children’s class proportions differ:
+
+$$
+H(R_p) > w_1 H(R_1) + w_2 H(R_2).
+$$
+
+The gap is the change in loss, or the **information gain** from the split:
+
+$$
+\text{Information Gain}
+= H(R_p) - \left[w_1 H(R_1) + w_2 H(R_2)\right].
+$$
+
+For an uneven split, the combined child loss is not the midpoint; it is the weighted point along the line connecting the child losses. Concavity still puts that weighted average below the parent entropy when the children have different class proportions.
+
+If both children have the same class proportions as the parent, the split has no information gain.
+
+![cross entropy](image.png)
+
+### Why not misclassification loss
+
+Misclassification loss only depends on which class is the majority:
+
+$$
+L_{\text{misclass}}(R) = 1 - \max_c p_c.
+$$
+
+Its curve is piecewise linear. If the parent and both children are on the same linear section, the weighted average child loss can equal the parent loss. The children may still have different class proportions, but misclassification loss does not register that change. So it can be too insensitive for selecting splits while a tree is growing.
+
+BASICALLY NO GAIN IN INFORMATION.
+
+![misclassification](image-1.png)
 
 ### Gini impurity
 
@@ -70,10 +122,12 @@ Like entropy, Gini is low for nearly pure regions and higher for mixed regions. 
 
 ### Regression trees
 
-A regression tree predicts a numerical target. Each leaf predicts the mean target value among its training observations:
+A regression tree predicts a numerical target. Each leaf predicts the mean target value (instead of just predicting the majority class) among its training observations:
 
 $$
 \hat y_m = \frac{1}{|R_m|}\sum_{i\in R_m} y_i.
+
+|R_m|: how many points we have in R_m
 $$
 
 Splits are chosen to reduce within-region prediction error, commonly the sum of squared deviations from the leaf mean:
