@@ -2,28 +2,9 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from pathlib import Path
 
-# Find the data files next to this script, even when it is run from another folder.
-data_folder = Path(__file__).resolve().parent
-
-
-def find_data_file(*possible_names):
-    for name in possible_names:
-        path = data_folder / name
-        if path.is_file():
-            return path
-    searched = ", ".join(possible_names)
-    raise FileNotFoundError(
-        f"Could not find any of these files in {data_folder}: {searched}"
-    )
-
-
-train_file = find_data_file("crime train.csv", "crime_train.csv")
-test_file = find_data_file("crime test.csv", "crime_test.csv")
-
-train = pd.read_csv(train_file)
-test = pd.read_csv(test_file)
+train = pd.read_csv("crime train.csv")
+test = pd.read_csv("crime_test.csv")
 print("Train shape:", train.shape)
 print("Test shape:", test.shape)
 
@@ -144,7 +125,7 @@ plt.xlabel("Epoch")
 plt.ylabel("Accuracy (%)")
 plt.ylim(40, 60)
 plt.legend()
-plt.savefig(data_folder / "accuracy_plot.png", dpi=150)
+plt.savefig("accuracy_plot.png", dpi=150)
 plt.show()
 
 print("Final train accuracy:", round(train_accs[-1], 2), "%")
@@ -169,7 +150,7 @@ results["Correct?"] = np.where(y_test == test_prediction, "yes", "no")
 print("Expected vs Predicted (first 20 rows of the test file):")
 print(results.head(20).round(3).to_string())
 
-results.to_csv(data_folder / "test_predictions.csv", index=False)
+results.to_csv("test_predictions.csv", index=False)
 print("All", len(results), "test predictions saved to test_predictions.csv")
 
 # how many of each kind of right and wrong answer
