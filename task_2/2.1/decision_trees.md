@@ -12,10 +12,10 @@ Tree construction uses **top-down, greedy, recursive partitioning**:
 
 A numerical split is usually defined by a feature (j) and threshold (t). Within a parent region (R_p), it creates child regions such as:
 
-\[
-R_1 = \{x \in R_p : x_j < t\}, \qquad
-R_2 = \{x \in R_p : x_j \ge t\}.
-\]
+$$
+R_1 = \{x \in R_p \mid x_j < t\}, \qquad
+R_2 = \{x \in R_p \mid x_j \ge t\}.
+$$
 
 The purpose of a split is to create child regions in which predictions are more reliable than a prediction made over the whole parent region.
 
