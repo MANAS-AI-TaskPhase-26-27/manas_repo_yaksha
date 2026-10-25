@@ -27,15 +27,15 @@ For classification, a leaf predicts the most common class among the training obs
 
 The misclassification loss of a region is the fraction that would be classified incorrectly if the region predicted its majority class:
 
-\[
+$$
 L_{\text{misclass}}(R) = 1 - \max_c \hat p_c.
-\]
+$$
 
 A candidate split is assessed by comparing the parent loss with the **observation-weighted** losses of its children:
 
-\[
+$$
 \text{gain} = L(R_p) - \left(w_1 L(R_1) + w_2 L(R_2)\right),
-\]
+$$
 
 where (w_i) is the proportion of the parent observations that go to child (i). A useful split has a large positive gain.
 
@@ -45,9 +45,9 @@ Misclassification loss is not very sensitive to changes in class proportions as 
 
 Entropy is a more sensitive measure of class mixture:
 
-\[
+$$
 L_{\text{entropy}}(R) = -\sum_c \hat p_c \log_2(\hat p_c).
-\]
+$$
 
 Entropy is zero when a region contains only one class. It is larger when the class proportions are more evenly mixed. The information-theoretic interpretation is that a mixed region requires more information to identify an observation’s class.
 
@@ -59,10 +59,10 @@ Because the parent class proportions are the weighted average of the children’
 
 Gini impurity is another common split criterion:
 
-\[
+$$
 L_{\text{Gini}}(R) = \sum_c \hat p_c(1-\hat p_c)
 = 1 - \sum_c \hat p_c^2.
-\]
+$$
 
 Like entropy, Gini is low for nearly pure regions and higher for mixed regions. Both criteria are generally more informative for split selection than misclassification loss.
 
@@ -72,15 +72,15 @@ Like entropy, Gini is low for nearly pure regions and higher for mixed regions. 
 
 A regression tree predicts a numerical target. Each leaf predicts the mean target value among its training observations:
 
-\[
+$$
 \hat y_m = \frac{1}{|R_m|}\sum_{i\in R_m} y_i.
-\]
+$$
 
 Splits are chosen to reduce within-region prediction error, commonly the sum of squared deviations from the leaf mean:
 
-\[
+$$
 \sum_{i\in R_m}(y_i - \hat y_m)^2.
-\]
+$$
 
 ### Categorical features
 
@@ -117,9 +117,9 @@ An ensemble combines predictions from multiple models. Averaging can reduce vari
 
 For (M) models with equal variance \(\sigma^2\) and pairwise correlation \(\rho\), the variance of their average is:
 
-\[
+$$
 \operatorname{Var}(\bar X) = \rho\sigma^2 + \frac{1-\rho}{M}\sigma^2.
-\]
+$$
 
 This simplified expression highlights two ways to reduce ensemble variance:
 
@@ -144,9 +144,9 @@ Each bootstrap sample contains about 63% unique observations from the original d
 
 For regression, bagging averages the component predictions:
 
-\[
+$$
 \hat f_{\text{bag}}(x) = \frac{1}{M}\sum_{m=1}^{M}\hat f_m(x).
-\]
+$$
 
 For classification, predictions can be combined by majority vote or by averaging class probabilities.
 
@@ -179,17 +179,17 @@ A **decision stump** is a tree with one split. In the AdaBoost-style process des
 
 A general additive form is:
 
-\[
+$$
 G(x) = \sum_{m=1}^{M} \alpha_m G_m(x),
-\]
+$$
 
 where (G_m) is the learner from round (m) and \(\alpha_m\) is its contribution weight. In binary classification, the final class is typically determined from the sign of the weighted sum.
 
 For standard AdaBoost, the learner weight is commonly written as
 
-\[
+$$
 \alpha_m = \frac{1}{2}\ln\left(\frac{1-\epsilon_m}{\epsilon_m}\right),
-\]
+$$
 
 where \(\epsilon_m\) is the learner’s weighted classification error. The central concept is that training weights change over rounds and the learners are combined additively.
 
