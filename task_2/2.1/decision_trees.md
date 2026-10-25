@@ -206,6 +206,8 @@ Ensembles can create diversity by using different learning algorithms, different
 ![ensembling](image-3.png)
 ![stuff](image-4.png)
 
+<span style="color:red">
+
 ## 7. Bagging
 
 **Bagging** stands for **bootstrap aggregation**. It approximates training on multiple datasets by repeatedly resampling the available training set.
@@ -289,3 +291,4 @@ Gradient boosting and XGBoost are related boosting methods. They also build addi
 - Averaging helps when component models are both numerous and not too correlated.
 - Bagging uses bootstrap samples to reduce variance; random forests further decorrelate trees by restricting candidate features at each split.
 - Boosting fits models sequentially and combines their weighted predictions, with later learners addressing errors left by earlier ones.
+</span>
