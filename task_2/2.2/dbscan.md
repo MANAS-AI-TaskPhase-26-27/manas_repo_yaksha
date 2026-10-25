@@ -1,5 +1,7 @@
 # DBSCAN Clustering
 
+identifying clusters in higher dimensions
+
 ## What DBSCAN does
 
 DBSCAN is a density-based clustering algorithm. It forms clusters from connected regions of high point density and treats sufficiently isolated points as noise. Unlike K-Means, it does not require the number of clusters in advance and can find clusters with non-spherical or nested shapes.
@@ -44,9 +46,9 @@ Clusters are discovered in sequence. A border point can be within `eps` of core 
 
 DBSCAN relies on distances between observations. Euclidean distance in (p) dimensions is:
 
-\[
+$$
 d(x,y)=\sqrt{\sum_{j=1}^{p}(x_j-y_j)^2}.
-\]
+$$
 
 The method works in higher-dimensional feature spaces without plotting the data. However, distance-based methods are sensitive to feature scales, so features are often standardized before calculating distances.
 

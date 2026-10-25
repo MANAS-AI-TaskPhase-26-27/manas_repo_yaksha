@@ -16,17 +16,19 @@ The process repeats until assignments stop changing (or another stopping conditi
 6. Repeat the assignment and update steps until the clusters settle.
 7. Keep track of the total within-cluster variation and repeat the process with different starting centers. Return the result with the lowest variation found.
 
+(we can asses the quality of clustering by adding up the variance within each cluster, the sum of thr distances of all data points from the mean of their assigned cluster)
+
 For a point (x_i) assigned to cluster (C_k), its center is:
 
-\[
+$$
 \mu_k = \frac{1}{|C_k|}\sum_{x_i \in C_k}x_i
-\]
+$$
 
 A common measure of clustering quality is within-cluster sum of squares (also called inertia):
 
-\[
+$$
 \text{Inertia} = \sum_{k=1}^{K}\sum_{x_i \in C_k}\|x_i-\mu_k\|^2
-\]
+$$
 
 Lower inertia means observations are closer to their assigned centers. But inertia always decreases as (K) increases, so it cannot be used by itself to choose (K).
 
@@ -45,13 +47,15 @@ Try several values of (K), calculate the within-cluster variation for each, and 
 
 The elbow is a visual heuristic; sometimes the plot does not have a clear bend.
 
+![elbow](image.png)
+
 ## K-Means with multiple features
 
 K-Means is not limited to data that can be drawn on a line. Each observation can have two, three, or many features. The algorithm compares observations using a distance measure, commonly Euclidean distance:
 
-\[
+$$
 d(x,y)=\sqrt{\sum_{j=1}^{p}(x_j-y_j)^2}
-\]
+$$
 
 For two features this is the usual Pythagorean distance; adding more features adds more squared differences under the square root. The data do not need to be plotted to be clustered—the distances are what matter.
 

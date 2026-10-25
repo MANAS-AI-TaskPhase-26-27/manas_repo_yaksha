@@ -126,7 +126,8 @@ A regression tree predicts a numerical target. Each leaf predicts the mean targe
 
 $$
 \hat y_m = \frac{1}{|R_m|}\sum_{i\in R_m} y_i.
-
+$$
+$$
 |R_m|: how many points we have in R_m
 $$
 
@@ -149,21 +150,39 @@ Common controls on tree growth include:
 - **Minimum leaf size:** stop splitting a region when it has too few observations.
 - **Maximum depth:** limit the number of splits along any path.
 - **Maximum number of nodes or leaves:** limit the total size of the tree.
+
+- **Minimum decrease in loss:** If a split does not reduce the loss by a certain amount, the tree should stop growing at that point. 
+
+A strict minimum-improvement rule can stop a tree too early. Some patterns require multiple splits: an initial split may provide little immediate benefit, while a later split within one child may be valuable. 
+
 - **Pruning:** grow a tree and then remove branches that do not improve performance on held-out data.
 
-A strict minimum-improvement rule can stop a tree too early. Some patterns require multiple splits: an initial split may provide little immediate benefit, while a later split within one child may be valuable. Pruning after growing the tree can preserve the opportunity to find such multi-step structure. The lecture describes using validation performance to guide pruning.
+Pruning after growing the tree can preserve the opportunity to find such multi-step structure. 
 
-## 5. Computation and properties of a single tree
+Use validation performance to guide pruning. MISCLASSIFICATION WITH VAL SET.
+
+## 5. Computation and properties of a single tree ???????????????????
 
 Let (n) be the number of observations, (f) the number of features, and (d) the tree depth.
 
-- Prediction follows one path from root to leaf and takes roughly (O(d)) operations.
+- Prediction follows one path from root to leaf and takes roughly (O(d)) operations. d<log n
+
 - A rough training-time estimate from the lecture is (O(nfd)), assuming efficient searches over feature split candidates.
+        Each point is part of (O(d)) nodes
+        Cost of point at each node is (O(f))
+        We have n points total.
+        Data matrix is of size nf
+        so training time is also somewhat fast
+
 - A balanced binary tree often has depth on the order of \(\log n\), while an unbalanced tree can be deeper.
 
 **Strengths:** trees can model nonlinear decision boundaries and feature interactions, can handle categorical features, are relatively fast, and can be interpreted by following their sequence of splits.
 
+(variance measures how much a model's predictions fluctuate when it is trained on different subsets or versions of the training data. A high-variance model is overly sensitive to the specific noise or details in its training set, which often leads to overfitting, meaning it performs well on training data but fails to generalize to new, unseen data.)
+
 **Limitations:** trees can overfit and have high variance. Their splits are axis-aligned, so they can need many regions to approximate boundaries that do not align with individual feature axes. A single tree may consequently have limited predictive accuracy.
+
+![recap](image-2.png)
 
 ## 6. Why ensembles help
 
@@ -183,6 +202,9 @@ This simplified expression highlights two ways to reduce ensemble variance:
 If models are independent, averaging reduces variance to \(\sigma^2/M\). If they are perfectly correlated, averaging does not reduce variance. Model diversity is therefore important.
 
 Ensembles can create diversity by using different learning algorithms, different training samples, or procedures such as bagging and boosting that vary how component models are fit.
+
+![ensembling](image-3.png)
+![stuff](image-4.png)
 
 ## 7. Bagging
 
